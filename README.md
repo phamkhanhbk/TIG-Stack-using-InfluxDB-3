@@ -87,12 +87,22 @@ brew services start grafana
 
 Open localhost:3000 in your browser to configure Grafana:
 
-1. Navigate to **Connections > Datasources > New** > Search and Select **InfluxDB**.
-2. Select **SQL** as the language type. 
-3. Provide the following credentials in the configuration:
+1. Navigate to **Connections > Search and Select **InfluxDB** --> Add a new data source
+2. Give it a name
+3. Select **SQL** as the query language (default one for InfluxDB v3). 
+4. Provide the following credentials in the configuration:
    - **URL**: http://localhost:8181
-   -  **Database**: cpu 
+   - **Database**: cpu 
    - **Insecure Connection**: toggle on
 
-4. Hit **Save & Test** to verify that you can connect to InfluxDB 3 Core. 
+5. Hit **Save & Test** to verify that you can connect to InfluxDB 3 Core.
+
+## Create a Monitoring Dashboard
+
+- Click 'Build a Dashboard' > 'Add a Visualization' > Select your recently created InfluDB 3 Core Data Source
+- Open the Panel Code and paste the following SQL Query
+  ```sql
+  SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
+  ```
+- Run the query to see the visualization and Save the dashboard
 
