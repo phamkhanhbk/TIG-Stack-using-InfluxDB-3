@@ -2,21 +2,19 @@
 
 ## 1. Install & Setup InfluxDB 3 Core (alpha release)
 
-### Install InfluxDB via shell script.
+### Install & Start InfluxDB via shell script.
 
 For detailed installation instructions, refer to this [guide](https://docs.influxdata.com/influxdb3/core/get-started/)
 
 `curl -O https://www.influxdata.com/d/install_influxdb3.sh && sh install_influxdb3.sh`
 
+Follow the prompt to install it locally (for this example recommend to use object storage as your local filesystem)
+
 ### Verify the installation 
 
 `influxdb3 --version`
 
-### Start InfluxDB
-
-Here we are using local disk at /.influxdb3 as the object storage location, this can be modified to storing data elsewhere such as on AWS S3, other cloud providers etc.
-
-`influxdb3 serve --host-id=local01 --object-store file --data-dir ~/.influxdb3`
+It should be running in the background now on localhost at port 8181!
 
 ### Create a token
 
@@ -35,11 +33,11 @@ brew install telegraf
 
 ### Configure Telegraf to send system CPU metrics to InfluxDB v3 
 
-Create a configuration file for CPU Input Plugin and the InfluxDB v2 Output Plugin
+Create a configuration file for CPU Input Plugin and the InfluxDB v2 Output Plugin in your current directory
 ```
-telegraf --input-filter cpu:http --output-filter influxdb_v2:file config > telegraf.conf
+touch telegraf.conf
 ```
-Open **telegraf.config** file and paste the following configration, make sure to update the _'token'_ with InfluxDB 3 token you created previously.
+Open and edit **telegraf.config** file and paste the following configration, make sure to update the _'token'_ with InfluxDB 3 token you created previously.
 
 ```
 # Global configuration
@@ -60,16 +58,20 @@ Open **telegraf.config** file and paste the following configration, make sure to
   bucket = "cpu"
 ```
 
-### Run Telegraf agent
+### Run Telegraf agent in the background
 
-`telegraf --config pwd/telegraf.conf --debug`
+```sh
+telegraf --config pwd/telegraf.conf --debug
+```
 
 ### Test InfluxDB & Telegraf
 
-Run the following influxdb3 command to query the data using SQL to verify it's being stored in InfluxDB using Telegraf.
+Open a new terminal window and run the following influxdb3 commands. These will query the data using SQL to verify it's being stored in InfluxDB database named 'CPU' using Telegraf.
 
-`influxdb3 query --dbname=cpu "SELECT * FROM cpu LIMIT 10"`
-
+```sql
+influxdb3 query --database=cpu "SHOW TABLES"
+influxdb3 query --database=cpu "SELECT * FROM cpu LIMIT 10"
+```
 
 ## 3. Install & Setup Grafana 
 
