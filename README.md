@@ -2,7 +2,19 @@
 
 ## 1. Install & Setup InfluxDB 3 Core (alpha release)
 
+### Install InfluxDB via shell script.
+
+For detailed installation instructions, refer to this [guide](https://docs.influxdata.com/influxdb3/core/get-started/)
+
+`curl -O https://www.influxdata.com/d/install_influxdb3.sh && sh install_influxdb3.sh`
+
+### Verify the installation 
+
+`influxdb3 --version`
+
 ### Start InfluxDB
+
+Here we are using local disk at /.influxdb3 as the object storage location, this can be modified to storing data elsewhere such as on AWS S3, other cloud providers etc.
 
 `influxdb3 serve --host-id=local01 --object-store file --data-dir ~/.influxdb3`
 
@@ -54,7 +66,7 @@ Open **telegraf.config** file and paste the following configration, make sure to
 
 ### Test InfluxDB & Telegraf
 
-Run the following influxdb3 command to query the data o verify it's being stored in InfluxDB using Telegraf.
+Run the following influxdb3 command to query the data using SQL to verify it's being stored in InfluxDB using Telegraf.
 
 `influxdb3 query --dbname=cpu "SELECT * FROM cpu LIMIT 10"`
 
