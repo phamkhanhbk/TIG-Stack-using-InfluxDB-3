@@ -61,7 +61,7 @@ Open and edit **telegraf.config** file and paste the following configration, mak
 ### Run Telegraf agent in the background
 
 ```sh
-telegraf --config pwd/telegraf.conf --debug
+telegraf --config telegraf.conf --debug
 ```
 
 ### Test InfluxDB & Telegraf
@@ -105,4 +105,10 @@ Open localhost:3000 in your browser to configure Grafana:
   SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
   ```
 - Run the query to see the visualization and Save the dashboard
+
+## Stopping Services
+
+1. Stop InfluxDB
+2. Stop Telegraf
+3. Stop Grafana
 
