@@ -1,6 +1,6 @@
 # TIG Stack using InfluxDB 3 Core
 
-A simple microservice architecture running 3 docker contianers to power open source TIG Stack using:
+TIG Stack is an arconym for the following three open source technologoies that seamless work togther to collect, store, analyze and monitor real time data from almost anything such as servers, APIs, IoT devices or even your smart coffee machine!
 
 1. **T**elegraf to collect system metrics
 2. **I**nfluxDB 3 Core (alpha release) as database for metrics
@@ -57,7 +57,7 @@ docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
-- Add Data Source : InfluxDB 3 Core
+- Add Data Source : InfluxDB 3 Core at 
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
 - In the query 'builder' paste and run the following SQL
 ```
@@ -75,3 +75,9 @@ docker-compose down
 docker-compose down -v
 ```
 
+### References
+
+1. (TIG Stack with InfluxDB Core but without Docker tutorial)(https://www.influxdata.com/blog/tig-stack-guide-influxdb-core/)
+2. [Telegraf](https://www.influxdata.com/time-series-platform/telegraf)
+3. InfluxDB 3 Core(https://www.influxdata.com/products/influxdb/)
+4. [Grafana](https://github.com/grafana/grafana)
