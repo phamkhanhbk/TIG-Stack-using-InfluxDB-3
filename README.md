@@ -6,7 +6,7 @@ A simple microservice architecture running 3 docker contianers to power open sou
 2. **I**nfluxDB 3 Core (alpha release) as database for metrics
 3. **G**rafana as data visualization in dashboard
 
-![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-2.png)
+![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-4.png)
 
 
 ## Pre-requisite:
