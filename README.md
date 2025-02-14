@@ -1,114 +1,73 @@
 # TIG Stack using InfluxDB 3 Core
 
-## 1. Install & Setup InfluxDB 3 Core (alpha release)
+A simple microservice architecture running 3 docker contianers to power open source TIG Stack using:
 
-### Install & Start InfluxDB via shell script.
+1. **T**elegraf to collect system metrics
+2. **I**nfluxDB 3 Core (alpha release) as database for metrics
+3. **G**rafana as data visualization in dashboard
 
-For detailed installation instructions, refer to this [guide](https://docs.influxdata.com/influxdb3/core/get-started/)
+All three are are ideally run together but they can also just as easily run by themselves and stopped at any time.
 
-`curl -O https://www.influxdata.com/d/install_influxdb3.sh && sh install_influxdb3.sh`
 
-Follow the prompt to install it locally (for this example recommend to use object storage as your local filesystem)
+Pre-requisite:
 
-### Verify the installation 
+1. Docker should be installed on your local machine and make sure it's running.
+2. Git (optional) to clone this Git Repository
 
-`influxdb3 --version`
+Steps:
 
-It should be running in the background now on localhost at port 8181!
-
-### Create a token
-
-`influxdb3 create token`
-
-Save the token information as we will use the plain text token with Telegraf in next step. The hashed token is a cryptographic representation of the plain token.
-
-## 2. Install & Setup Telegraf 
-
-MacOS example below, for other operating systems please follow this [guide](https://docs.influxdata.com/telegraf/v1/install/?t=macOS#download-and-install-telegraf)
-
+## 1. Clone the repository
 ```
-brew update
-brew install telegraf
+git clone <repository-url>
+cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
-### Configure Telegraf to send system CPU metrics to InfluxDB v3 
+## 2. Set Up Environment Variables
+Open and Update the `.env` file in the project root using information
 
-Create a configuration file for CPU Input Plugin and the InfluxDB v2 Output Plugin in your current directory
-```
-touch telegraf.conf
-```
-Open and edit **telegraf.config** file and paste the following configration, make sure to update the _'token'_ with InfluxDB 3 token you created previously.
+## 3. Start the Stack
 
-```
-# Global configuration
-[agent]
-  interval = "10s"           # Collection interval
-  flush_interval = "10s"     # Data flush interval
-# Input Plugin: CPU Metrics
-[[inputs.cpu]]
-  percpu = true              # Collect per-CPU metrics
-  totalcpu = true            # Collect total CPU metrics
-  collect_cpu_time = false   # Do not collect CPU time metrics
-  report_active = true       # Report active CPU percentage
-# Output Plugin: InfluxDB v2
-[[outputs.influxdb_v2]]
-  urls = ["http://127.0.0.1:8181"]
-  token = "<your plain Token apiv3_xxx>"
-  organization = ""
-  bucket = "cpu"
-```
-
-### Run Telegraf agent in the background
-
-```sh
-telegraf --config telegraf.conf --debug
-```
-
-### Test InfluxDB & Telegraf
-
-Open a new terminal window and run the following influxdb3 commands. These will query the data using SQL to verify it's being stored in InfluxDB database named 'CPU' using Telegraf.
-
-```sql
-influxdb3 query --database=cpu "SHOW TABLES"
-influxdb3 query --database=cpu "SELECT * FROM cpu LIMIT 10"
-```
-
-## 3. Install & Setup Grafana 
-
-Install Grafana locally, following are instructions to install and run for MacOS, for other operating systems refer to this [guide](https://grafana.com/docs/grafana/latest/setup-grafana/installation)
+Make sure Docker is up and running by typing `docker info`. Once you verify it is then let's build our stack in background which is configured in the `docker-compose.yaml`. Feel free to edit it file as per your need.
 
 ```
-brew update
-brew install grafana
-brew services start grafana
+docker-compose up -d
+docker-compose ps
 ```
 
-### Configure Grafana with InfluxDB 3 Core
+# Vertify metrics are being collected by Telegraf
+```
+docker-compose logs telegraf
+```
 
-Open localhost:3000 in your browser to configure Grafana:
+### Check InfluxDB 3 Core is up and running on port 8181
+```
+docker-compose logs influxdb
+```
 
-1. Navigate to **Connections > Search and Select **InfluxDB** --> Add a new data source
-2. Give it a name
-3. Select **SQL** as the query language (default one for InfluxDB v3). 
-4. Provide the following credentials in the configuration:
-   - **URL**: http://localhost:8181
-   - **Database**: cpu 
-   - **Insecure Connection**: toggle on
+### Create an InfluxDB token (first time only) and update in your .env file
+```
+docker-compose exec influxdb influxdb3 create token
+```
 
-5. Hit **Save & Test** to verify that you can connect to InfluxDB 3 Core.
+### View Grafana Dashboard
 
-## Create a Monitoring Dashboard
+- Open localhost:3000 from your browser 
+- Login with credentials from .env (default: admin/admin)
+- Add Data Source : InfluxDB 3 Core
+- Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
+- In the query 'builder' paste and run the following SQL
+```
+SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
+```
 
-- Click 'Build a Dashboard' > 'Add a Visualization' > Select your recently created InfluDB 3 Core Data Source
-- Open the Panel Code and paste the following SQL Query
-  ```sql
-  SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
-  ```
-- Run the query to see the visualization and Save the dashboard
+## Stopping the TIG Stack & Removing Data
 
-## Stopping Services
-
-1. Stop InfluxDB
-2. Stop Telegraf
-3. Stop Grafana
+### Stop Services
+```
+docker-compose down
+```
+### Stop Services (careful!)
+```
+docker-compose down -v
+```
 
