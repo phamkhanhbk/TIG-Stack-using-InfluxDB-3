@@ -48,6 +48,10 @@ docker-compose logs influxdb
 ```
 docker-compose exec influxdb influxdb3 create token
 ```
+### Verify InfluxDB Tables by running a simple SQL Query
+```
+docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
+```
 
 ### View Grafana Dashboard
 
