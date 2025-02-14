@@ -6,19 +6,19 @@ A simple microservice architecture running 3 docker contianers to power open sou
 2. **I**nfluxDB 3 Core (alpha release) as database for metrics
 3. **G**rafana as data visualization in dashboard
 
-All three are are ideally run together but they can also just as easily run by themselves and stopped at any time.
+![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-2.png)
 
 
-Pre-requisite:
+## Pre-requisite:
 
 1. Docker should be installed on your local machine and make sure it's running.
 2. Git (optional) to clone this Git Repository
 
-Steps:
+# Steps:
 
 ## 1. Clone the repository
 ```
-git clone <repository-url>
+git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
 cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
