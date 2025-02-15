@@ -57,7 +57,7 @@ docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
-- Add Data Source : InfluxDB 3 Core at 
+- Add Data Source : InfluxDB at http://influxdb:8181
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
 - In the query 'builder' paste and run the following SQL
 ```
