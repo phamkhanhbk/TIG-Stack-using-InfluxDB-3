@@ -33,11 +33,11 @@ docker-compose up -d
 docker-compose logs telegraf
 ```
 
-## 4. Create InfluxDB Token
+## 4. Create InfluxDB Token & Update the .env file
 ```
 docker-compose exec influxdb influxdb3 create token
 ```
-### Update your .env file with the new token:
+### Add to the .env file the bearer token
 ```
 INFLUXDB_TOKEN=your_new_token_here
 ```
