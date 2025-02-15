@@ -39,15 +39,12 @@ docker-compose ps
 docker-compose logs telegraf
 ```
 
-### Check InfluxDB 3 Core is up and running on port 8181
+### Check InfluxDB 3 Core is up and running & save it's container-id
 ```
 docker-compose logs influxdb
+docker ps
 ```
 
-### Create an InfluxDB token (first time only) and update in your .env file
-```
-docker-compose exec influxdb influxdb3 create token
-```
 ### Verify InfluxDB Tables by running a simple SQL Query
 ```
 docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
