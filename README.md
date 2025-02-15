@@ -22,10 +22,7 @@ git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
 cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
-## 2. Set Up Environment Variables
-Open and Update the `.env` file in the project root using information
-
-## 3. Start the Stack
+## 2. Start the Stack
 
 Make sure Docker is up and running by typing `docker info`. Once you verify it is then let's build our stack in background which is configured in the `docker-compose.yaml`. Feel free to edit it file as per your need.
 
@@ -34,23 +31,19 @@ docker-compose up -d
 docker-compose ps
 ```
 
-# Vertify metrics are being collected by Telegraf
+## 2. Verify metrics are being collected by Telegraf
 ```
 docker-compose logs telegraf
 ```
 
-### Check InfluxDB 3 Core is up and running & save it's container-id
+## 3. Check InfluxDB 3 Core is up and Verify InfluxDB Tables
 ```
 docker-compose logs influxdb
 docker ps
-```
-
-### Verify InfluxDB Tables by running a simple SQL Query
-```
 docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
 ```
 
-### View Grafana Dashboard
+## 4. Setup & View Grafana Dashboard
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
