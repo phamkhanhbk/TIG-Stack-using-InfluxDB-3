@@ -28,7 +28,6 @@ Make sure Docker is up and running by typing `docker info`. Once you verify it i
 
 ```
 docker-compose up -d
-docker-compose ps
 ```
 
 ## 2. Verify metrics are being collected by Telegraf
@@ -36,7 +35,18 @@ docker-compose ps
 docker-compose logs telegraf
 ```
 
-## 3. Check InfluxDB 3 Core is up and Verify InfluxDB Tables
+## 3. Create InfluxDB Token
+```
+docker-compose exec influxdb influxdb3 create token
+```
+This will output a token - save it! You'll need to update it in your .env file.
+
+### Update your .env file with the new token:
+```
+INFLUXDB_TOKEN=your_new_token_here
+```
+
+## 4. Verify InfluxDB is setup correctly and tables are being created
 ```
 docker-compose logs influxdb
 docker ps
