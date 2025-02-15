@@ -23,37 +23,33 @@ cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
 ## 2. Start the Stack
-
 Make sure Docker is up and running by typing `docker info`. Once you verify it is then let's build our stack in background which is configured in the `docker-compose.yaml`. Feel free to edit it file as per your need.
-
 ```
 docker-compose up -d
 ```
 
-## 2. Verify metrics are being collected by Telegraf
+## 3. Verify metrics are being collected by Telegraf
 ```
 docker-compose logs telegraf
 ```
 
-## 3. Create InfluxDB Token
+## 4. Create InfluxDB Token
 ```
 docker-compose exec influxdb influxdb3 create token
 ```
-This will output a token - save it! You'll need to update it in your .env file.
-
 ### Update your .env file with the new token:
 ```
 INFLUXDB_TOKEN=your_new_token_here
 ```
 
-## 4. Verify InfluxDB is setup correctly and tables are being created
+## 5. Verify InfluxDB is setup correctly and tables are being created
 ```
 docker-compose logs influxdb
 docker ps
 docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
 ```
 
-## 4. Setup & View Grafana Dashboard
+## 6. Setup & View Grafana Dashboard
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
@@ -64,7 +60,7 @@ docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
 SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
 ```
 
-## Stopping the TIG Stack & Removing Data
+## 7. Stopping the TIG Stack & Removing Data
 
 ### Stop Services
 ```
