@@ -8,6 +8,9 @@ TIG Stack is an arconym for the following three open source technologoies that s
 
 ![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-4.png)
 
+## [YouTube Video Tutorial](https://www.youtube.com/watch?v=NLdJm2N7ctc)
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NLdJm2N7ctc/0.jpg)](https://www.youtube.com/watch?v=NLdJm2N7ctc)
 
 ## Pre-requisite:
 
