@@ -32,7 +32,9 @@ docker-compose up -d influxdb3-core
 docker-compose exec influxdb3-core influxdb3 create token --admin
 ```
 
-### 2.2 Start InfluxDB 3 Enterprise & Generate Operator Token. Note you can also create custom token with limited permission in InfluxDB 3 Enterprise, see [here.](https://docs.influxdata.com/influxdb3/enterprise/admin/tokens/admin/create/)
+### 2.2 Start InfluxDB 3 Enterprise & Generate Operator Token 
+
+Note you can also create custom token with limited permission in [InfluxDB 3 Enterprise.](https://docs.influxdata.com/influxdb3/enterprise/admin/tokens/admin/create)
 
 ```sh
 docker compose up -d influxdb3-enterprise
