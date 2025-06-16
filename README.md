@@ -89,10 +89,3 @@ docker-compose down
 ```sh
 docker-compose down -v
 ```
-
-### References
-
-1. (TIG Stack with InfluxDB Core but without Docker tutorial)(https://www.influxdata.com/blog/tig-stack-guide-influxdb-core/)
-2. [Telegraf](https://www.influxdata.com/time-series-platform/telegraf)
-3. InfluxDB 3 Core(https://www.influxdata.com/products/influxdb/)
-4. [Grafana](https://github.com/grafana/grafana)
