@@ -17,7 +17,7 @@ TIG Stack is an arconym for the following three open source technologoies that s
 # Steps:
 
 ## 1. Clone the repository
-```
+```sh
 git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
 cd TIG-Stack-using-InfluxDB-3-Core
 ```
@@ -31,12 +31,14 @@ docker-compose exec influxdb3-core influxdb3 create token --admin
 
 ## 3. Start the remaining TIG Stack in Docker
 
+```sh
 docker-compose up -d
+```
 
 ## 4. Verify the Stack
 
 Check Telegraf Logs
-```
+```sh
 docker-compose logs telegraf
 ```
 Check InfluxDB 3 Logs & See Telegraf generated Tables
@@ -56,19 +58,19 @@ docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database loca
   - URL: http://influxdb3-core:8181
   - Token: Paste the token string you created using influxdb3 cli, which should also be in your .env file
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
-- In the query 'builder' paste and run the following SQL query:
-```
+- In the query 'builder' paste and run the following SQL query to see the visualization of the data collected via Telegraf, written to InfluxDB 3.
+```sql
 SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
 ```
 
 ## 7. Stopping the TIG Stack & Removing Data
 
 ### Stop Services
-```
+```sh
 docker-compose down
 ```
 ### Stop and Remove Volumes (Destroys All Data)
-```
+```sh
 docker-compose down -v
 ```
 
