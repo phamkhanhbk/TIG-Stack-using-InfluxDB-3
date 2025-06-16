@@ -8,14 +8,11 @@ TIG Stack is an arconym for the following three open source technologoies that s
 
 ![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-4.png)
 
-## [YouTube Video Tutorial](https://www.youtube.com/watch?v=NLdJm2N7ctc)
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NLdJm2N7ctc/0.jpg)](https://www.youtube.com/watch?v=NLdJm2N7ctc)
-
 ## Pre-requisite:
 
-1. Docker should be installed on your local machine and make sure it's running.
-2. Git (optional) to clone this Git Repository
+1. Docker should be installed on your local machine
+2. Git
+3. Editor like VS Code
 
 # Steps:
 
@@ -25,40 +22,41 @@ git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
 cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
-## 2. Start the Stack
-Make sure Docker is up and running by typing `docker info`. Once you verify it is then let's build our stack in background which is configured in the `docker-compose.yaml`. Feel free to edit it file as per your need.
-```
-docker-compose up -d
+## 2. Start InfluxDB 3 & Generate Token
+
+```sh
+docker-compose up -d influxdb3-core
+docker-compose exec influxdb3-core influxdb3 create token --admin
 ```
 
-## 3. Verify metrics are being collected by Telegraf
+## 3. Start the remaining TIG Stack in Docker
+
+docker-compose up -d
+
+## 4. Verify the Stack
+
+Check Telegraf Logs
 ```
 docker-compose logs telegraf
 ```
+Check InfluxDB 3 Logs & See Telegraf generated Tables
 
-## 4. Create InfluxDB Token & Update the .env file
-```
-docker-compose exec influxdb influxdb3 create token
-```
-### Add to the .env file the bearer token
-```
-INFLUXDB_TOKEN=your_new_token_here
+```sh
+docker-compose logs influxdb3-core
+docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database local_system --token YOUR_TOKEN_STRING
 ```
 
-## 5. Verify InfluxDB is setup correctly and tables are being created
-```
-docker-compose logs influxdb
-docker ps
-docker exec <container-id> influxdb3 query --database local_system "SHOW TABLES"
-```
-
-## 6. Setup & View Grafana Dashboard
+## 5. Setup & View Grafana Dashboard
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
-- Add Data Source : InfluxDB at http://influxdb:8181
+- Add Data Source : 
+  - Type: InfluxDB
+  - Language : SQL
+  - URL: http://influxdb3-core:8181
+  - Token: Paste the token string you created using influxdb3 cli, which should also be in your .env file
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
-- In the query 'builder' paste and run the following SQL
+- In the query 'builder' paste and run the following SQL query:
 ```
 SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
 ```
@@ -69,7 +67,7 @@ SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "t
 ```
 docker-compose down
 ```
-### Stop Services (careful!)
+### Stop and Remove Volumes (Destroys All Data)
 ```
 docker-compose down -v
 ```

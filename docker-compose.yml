@@ -2,30 +2,31 @@
 # Author: Suyash Joshi (sjoshi@influxdata.com)
 
 services:
-  influxdb:
-    image: quay.io/influxdb/influxdb3-core:latest
-    command: serve --node-id=${INFLUXDB_NODE_ID} --object-store=file --data-dir=/var/lib/influxdb3
+  influxdb3-core:
+    container_name: influxdb3-core
+    image: influxdb:3-core
     ports:
-      - "${INFLUXDB_HTTP_PORT}:8181"
+      - 8181:8181
+    command:
+      - influxdb3
+      - serve
+      - --node-id=${INFLUXDB_NODE_ID}
+      - --object-store=file
+      - --data-dir=/var/lib/influxdb3
     volumes:
       - influxdb_data:/var/lib/influxdb3
-      - ./influxdb/config:/etc/influxdb3
-    environment:
-      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
-      - INFLUXDB_ORG=${INFLUXDB_ORG}
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8181/health" ]
+      test: ["CMD-SHELL", "curl -f -H 'Authorization: Bearer ${INFLUXDB_TOKEN}' http://localhost:8181/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
     restart: unless-stopped
 
   telegraf:
-    build:
-      context: ./telegraf
-      dockerfile: Dockerfile
+    container_name: telegraf
+    image: telegraf
     depends_on:
-      influxdb:
+      influxdb3-core:
         condition: service_healthy
     environment:
       - INFLUXDB_HOST=${INFLUXDB_HOST}
@@ -34,10 +35,12 @@ services:
       - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
       - TELEGRAF_COLLECTION_INTERVAL=${TELEGRAF_COLLECTION_INTERVAL}
       - HOSTNAME=telegraf
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana
     ports:
       - "${GRAFANA_PORT}:3000"
     volumes:
@@ -46,7 +49,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     depends_on:
-      - influxdb
+      - influxdb3-core
     restart: unless-stopped
 
 volumes:
