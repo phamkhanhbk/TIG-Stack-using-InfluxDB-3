@@ -1,4 +1,4 @@
-# TIG Stack using InfluxDB 3 Core/Enterprise
+# Modern TIG Stack for InfluxDB 3
 
 TIG Stack is an arconym for the following three open source technologoies that seamless work togther to collect, store, analyze and monitor real time data from almost anything such as servers, APIs, IoT devices or even your smart coffee machine!
 
