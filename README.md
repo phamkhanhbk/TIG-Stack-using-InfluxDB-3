@@ -22,13 +22,22 @@ git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
 cd TIG-Stack-using-InfluxDB-3-Core
 ```
 
-## 2. Start InfluxDB 3 & Generate Token
+## 2. Start InfluxDB 3 
+
+
+### 2.1 InfluxDB 3 Core & Generate Opreator Token
 
 ```sh
 docker-compose up -d influxdb3-core
 docker-compose exec influxdb3-core influxdb3 create token --admin
 ```
 
+### 2.2 Start InfluxDB 3 Enterprise & Generate Operator Token. Note you can also create custom token with limited permission in InfluxDB 3 Enterprise, see [here.](https://docs.influxdata.com/influxdb3/enterprise/admin/tokens/admin/create/)
+
+```sh
+docker compose up -d influxdb3-enterprise
+docker compose exec influxdb3-enterprise influxdb3 create token --admin
+```
 ## 3. Start the remaining TIG Stack in Docker
 
 ```sh
@@ -55,7 +64,8 @@ docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database loca
 - Add Data Source : 
   - Type: InfluxDB
   - Language : SQL
-  - URL: http://influxdb3-core:8181
+  - URL: http://influxdb3-core:8181 for connecting to InfluxDB 3 Core 
+  - URL: http://influxdb3-enterprise:8181 for connecting to InfluxDB 3 Enterprise
   - Token: Paste the token string you created using influxdb3 cli, which should also be in your .env file
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
 - In the query 'builder' paste and run the following SQL query to see the visualization of the data collected via Telegraf, written to InfluxDB 3.
