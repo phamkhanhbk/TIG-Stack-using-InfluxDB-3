@@ -10,9 +10,9 @@ TIG Stack is an arconym for the following three open source technologoies that s
 
 ## Pre-requisite:
 
-1. Docker should be installed on your local machine. We will rely on docker-compose.yaml file to pull docker images for Telegraf, InfluxDB 3 Core/Enteprise and Grafana.
-2. Git
-3. Editor like VS Code
+1. Docker should be installed on your local machine. We will rely on the [docker-compose.yaml](docker-compose.yml) file to configure and install Telegraf, InfluxDB 3 Core/Enteprise and Grafana docker images.
+2. Git for version control (optional)
+3. Editor
 
 # Steps:
 
