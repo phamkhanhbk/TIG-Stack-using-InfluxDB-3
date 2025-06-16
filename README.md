@@ -3,7 +3,7 @@
 TIG Stack is an arconym for the following three open source technologoies that seamless work togther to collect, store, analyze and monitor real time data from almost anything such as servers, APIs, IoT devices or even your smart coffee machine!
 
 1. **T**elegraf to collect system metrics
-2. **I**nfluxDB 3 Core (alpha release) as database for metrics
+2. **I**nfluxDB 3 (Core or Enterprise)
 3. **G**rafana as data visualization in dashboard
 
 ![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/TIG.drawio-4.png)
