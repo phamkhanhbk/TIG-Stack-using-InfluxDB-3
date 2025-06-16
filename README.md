@@ -1,4 +1,4 @@
-# TIG Stack using InfluxDB 3 Core
+# TIG Stack using InfluxDB 3 Core/Enterprise
 
 TIG Stack is an arconym for the following three open source technologoies that seamless work togther to collect, store, analyze and monitor real time data from almost anything such as servers, APIs, IoT devices or even your smart coffee machine!
 
@@ -10,7 +10,7 @@ TIG Stack is an arconym for the following three open source technologoies that s
 
 ## Pre-requisite:
 
-1. Docker should be installed on your local machine
+1. Docker should be installed on your local machine. We will rely on docker-compose.yaml file to pull docker images for Telegraf, InfluxDB 3 Core/Enteprise and Grafana.
 2. Git
 3. Editor like VS Code
 
@@ -18,8 +18,8 @@ TIG Stack is an arconym for the following three open source technologoies that s
 
 ## 1. Clone the repository
 ```sh
-git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core.git
-cd TIG-Stack-using-InfluxDB-3-Core
+git clone https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3.git
+cd TIG-Stack-using-InfluxDB-3
 ```
 
 ## 2. Start InfluxDB 3 & Generate Token
