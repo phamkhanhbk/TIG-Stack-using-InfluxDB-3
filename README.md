@@ -40,13 +40,17 @@ Note you can also create custom token with limited permission in [InfluxDB 3 Ent
 docker compose up -d influxdb3-enterprise
 docker compose exec influxdb3-enterprise influxdb3 create token --admin
 ```
-## 3. Start the remaining TIG Stack in Docker
+
+## 3. Update .env file
+
+Open [.env](.env) file and paste the token string for "INFLUXDB_TOKEN" enviornment variable.
+## 4. Start the remaining TIG Stack in Docker
 
 ```sh
 docker-compose up -d
 ```
 
-## 4. Verify the Stack
+## 5. Verify the Stack
 
 Check Telegraf Logs
 ```sh
@@ -59,7 +63,7 @@ docker-compose logs influxdb3-core
 docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database local_system --token YOUR_TOKEN_STRING
 ```
 
-## 5. Setup & View Grafana Dashboard
+## 6. Setup & View Grafana Dashboard
 
 - Open localhost:3000 from your browser 
 - Login with credentials from .env (default: admin/admin)
