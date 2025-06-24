@@ -44,10 +44,11 @@ docker compose exec influxdb3-enterprise influxdb3 create token --admin
 ## 3. Update .env file
 
 Open [.env](.env) file and paste the token string for "INFLUXDB_TOKEN" enviornment variable.
-## 4. Start the remaining TIG Stack in Docker
+## 4. Start the remaining services of the TIG Stack in Docker
 
 ```sh
-docker-compose up -d
+docker-compose up -d telegraf
+docker-compose up -d grafana
 ```
 
 ## 5. Verify the Stack
