@@ -24,28 +24,21 @@ cd TIG-Stack-using-InfluxDB-3
 
 ## 2. Start InfluxDB 3 
 
-
-### 2.1 InfluxDB 3 Core & Generate Opreator Token
+InfluxDB 3 Core & Generate Opreator Token
 
 ```sh
 docker-compose up -d influxdb3-core
 docker-compose exec influxdb3-core influxdb3 create token --admin
 ```
 
-### 2.2 Start InfluxDB 3 Enterprise & Generate Operator Token 
-
-Note you can also create custom token with limited permission in [InfluxDB 3 Enterprise.](https://docs.influxdata.com/influxdb3/enterprise/admin/tokens/admin/create)
-
-```sh
-docker compose up -d influxdb3-enterprise
-docker compose exec influxdb3-enterprise influxdb3 create token --admin
-```
-
 ## 3. Update .env file
 
 Open [.env](.env) file and paste the token string for "INFLUXDB_TOKEN" enviornment variable.
+
 ## 4. Start the remaining services of the TIG Stack in Docker
 
+**First make sure Docker application is up and running on your local machine.
+**
 ```sh
 docker-compose up -d telegraf
 docker-compose up -d grafana
