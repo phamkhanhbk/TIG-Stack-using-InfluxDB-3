@@ -19,27 +19,6 @@ services:
       retries: 3
     restart: unless-stopped
 
-  influxdb3-enterprise:
-    container_name: influxdb3-enterprise
-    image: influxdb:3-enterprise
-    ports:
-      - 8182:8181  # Note: host port 8182 maps to container port 8181 to avoid accidental port conflict
-    command:
-      - influxdb3
-      - serve
-      - --node-id=${INFLUXDB_NODE_ID}
-      - --cluster-id=cluster0
-      - --object-store=file
-      - --data-dir=/var/lib/influxdb3
-    volumes:
-      - influxdb_data:/var/lib/influxdb3
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f -H 'Authorization: Bearer ${INFLUXDB_TOKEN}' http://localhost:8181/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    restart: unless-stopped
-
   telegraf:
     container_name: telegraf
     image: telegraf
