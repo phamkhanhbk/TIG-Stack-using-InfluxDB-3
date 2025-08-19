@@ -74,6 +74,7 @@ docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database loca
 ```sql
 SELECT "cpu", "usage_user", "time" FROM "cpu" WHERE "time" >= $__timeFrom AND "time" <= $__timeTo AND "cpu" = 'cpu0'
 ```
+![TIG Stack](https://github.com/InfluxCommunity/TIG-Stack-using-InfluxDB-3-Core/blob/main/Grafana_screenshot.png)
 
 ## 7. Stopping the TIG Stack & Removing Data
 
