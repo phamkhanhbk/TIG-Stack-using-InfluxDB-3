@@ -67,6 +67,7 @@ docker-compose exec influxdb3-core influxdb3 query "SHOW TABLES" --database loca
   - Database: Paste the string value for INFLUXDB_BUCKET enviornment variable from your .env file
   - URL: http://influxdb3-core:8181 for connecting to InfluxDB 3 Core 
   - URL: http://influxdb3-enterprise:8181 for connecting to InfluxDB 3 Enterprise
+  - Dataabse: Find this inside the .env file (bucker name is same as database name)
   - Token: Paste the string value for INFLUXDB_TOKEN enviornment variable from your .env file
 - Add Data Visualization : Dashboards > Create Dashboard - Add Visualization > Select Data Source > InfluxDB_3_Core 
 - In the query 'builder' paste and run the following SQL query to see the visualization of the data collected via Telegraf, written to InfluxDB 3.
