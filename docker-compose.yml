@@ -36,6 +36,7 @@ services:
     volumes:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
     restart: unless-stopped
+    entrypoint: /bin/bash -c "chmod 777 /var/run/docker.sock && /entrypoint.sh telegraf"
 
   grafana:
     image: grafana/grafana
